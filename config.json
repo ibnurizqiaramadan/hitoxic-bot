@@ -1,0 +1,10 @@
+{
+    "BOT_TOKEN": "NjcyNzI5MTk3ODYwNjE4Mjcw.XjPt4w.vbYtHh8_j8ovXT2InoKQoFek3Kw",
+    "API_URL": "http://hitoxic-web.test/api/v1/",
+    "API_TOKEN": "dd9166dd95c06648c6c11886a42d9bcd78ddefdf",
+    "OWNER_ID": "257147179297144833",
+    "PREFIX": "/",
+    "BOT_MESSAGE": "5000",
+    "USER_MESSAGE": "3000",
+    "WARN_MESSAGE": "30000"
+}
