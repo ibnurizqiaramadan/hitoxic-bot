@@ -68,7 +68,7 @@ async function cekMember(message) {
 
 async function cekChannel(message) {
     return new Promise(callback => {
-        const channels = bot.guildsData[message.guild.id].channels.list ?? []
+        const channels = bot.guildsData[message.guild.id].channels ?? []
         callback(channels[message.channel.id] ?? false)
     })
 }
