@@ -194,6 +194,10 @@ class Engine {
         const tampungMessage = this.message
         return this.message = tampungMessage.replace(/<:[\n\S]+:[\n\S]+>/g, ""), this
     }
+    removeSimbol(){
+        const tampungMessage = this.message
+        return this.message = tampungMessage.replace(/[^a-z0-9]/g, ""), this
+    }
     removeDuplicate() {
         const tampungMessage = this.message
         let res = ""
@@ -220,11 +224,23 @@ class Engine {
     checkBad(badData = []) {
         const tampungMessage = this.message
         let badMatch = []
+        let badMatchSymbol = []
+        let tampungMessageReplaceSymbol = ''
         badData.forEach(bad => {
             if (tampungMessage.includes(bad.trim())) badMatch.push(bad)
         })
-        this.bad = badMatch
-        this.message = tampungMessage
+        badMatch.length > 0 ? (
+            this.bad = badMatch,
+            this.message = tampungMessage
+        ) : (
+            tampungMessageReplaceSymbol = this.setMessageString(tampungMessage).removeSimbol().result(),
+            console.log(`test ${tampungMessageReplaceSymbol.message}`),
+            badData.forEach(bad1 => {
+                if (tampungMessageReplaceSymbol.message.includes(bad1.trim())) badMatchSymbol.push(bad1)
+            }),
+            this.bad = badMatchSymbol,
+            this.message = tampungMessageReplaceSymbol.message
+        )
         return this
     }
     result() {
