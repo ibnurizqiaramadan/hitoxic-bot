@@ -22,17 +22,17 @@ console.log("Starting Bot . . .")
 bot.on('ready', async () => {
     const guilds = await engine.getGuildSettings()
     const members = await engine.getMembersStatus()
-    guilds.status == 'ok' ? (
+    guilds.status == 'ok' && members.status == 'ok' ? (
         bot.guildsData = guilds.data ?? [], 
         bot.membersData = members.data ?? [], 
         console.log(bot.guildsData),
         console.log(bot.membersData),
         console.log("Bot Ready !")
     ) : (
-         bot.destroy(), 
-         console.log(guilds), 
-         console.log('bot gagal berjalan :('),
-         process.exit(1)
+        bot.destroy(), 
+        console.log(guilds), 
+        console.log('bot gagal berjalan :('),
+        process.exit(1)
     )
 })
 

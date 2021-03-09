@@ -98,8 +98,8 @@ function startCommand(message) {
                     .then(async msg => {
                         const guilds = await engine.getGuildSettings()
                         const members = await engine.getMembersStatus()
-                        guilds.status == 'ok' ? (
-                            args[0] == 'all' &&  message.author.id == OWNER_ID ? (
+                        guilds.status == 'ok' && members.status == 'ok' ? (
+                            args[0] == 'all' && message.author.id == OWNER_ID ? (
                                 bot.guildsData = guilds.data ?? [], 
                                 bot.membersData = members.data ?? [],
                                 console.log('Reload all guilds'),

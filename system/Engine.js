@@ -5,7 +5,7 @@ const {
 const request = require('request')
 const Function = require('../helper/Function')
 const fun = new Function()
- 
+
 class Engine {
     async getGuildSettings() {
         return new Promise(callback => {
@@ -144,7 +144,7 @@ class Engine {
                     'username': message.author.tag,
                     'message': message.content,
                     'attachments': JSON.stringify(option.attachments) ?? '',
-                    'type': option.type ?? '0' 
+                    'type': option.type ?? '0'
                 }
             }, function (error, response) {
                 if (error) throw error
@@ -194,24 +194,18 @@ class Engine {
         const tampungMessage = this.message
         return this.message = tampungMessage.replace(/<:[\n\S]+:[\n\S]+>/g, ""), this
     }
-    removeSimbol(){
+    removeSimbol() {
         const tampungMessage = this.message
         return this.message = tampungMessage.replace(/[^a-z0-9]/g, ""), this
     }
     removeDuplicate() {
-        const tampungMessage = this.message
-        let res = ""
-        let x = []
-        for (let i = 0; i < tampungMessage.length; i++) {
-            if (x[x.length - 1] != tampungMessage[i]) {
-                x[i] = tampungMessage[i]
-            }
-        }
-        x.forEach(zz => {
+        const tampungMessage = this.message;
+        let res = "",
+            x = [];
+        for (let i = 0; i < tampungMessage.length; i++) x[x.length - 1] != tampungMessage[i] && (x[i] = tampungMessage[i])
+        return x.forEach(zz => {
             res += zz
-        })
-        this.message = res
-        return this
+        }), this.message = res, this
     }
     removeIgnore(ignoreData = []) {
         let tampungMessage = this.message

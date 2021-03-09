@@ -1,7 +1,9 @@
+const {WARN_MESSAGE} = require('../config.json')
+
 module.exports = {
     name: 'ping',
     description: 'Ping!',
-    execute(msg, args) {
-        msg.reply(`PONG !\nping ke Server ** ${msg.guild} ** ${Date.now() - msg.createdTimestamp} ms`)
+    execute(message, args) {
+        message.reply(`PONG !\nping ke Server ** ${message.guild} ** ${Date.now() - message.createdTimestamp} ms`).then(msg => msg.delete({timeout: WARN_MESSAGE}))
     },
 };
