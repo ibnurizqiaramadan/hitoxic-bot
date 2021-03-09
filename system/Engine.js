@@ -234,9 +234,8 @@ class Engine {
             this.message = tampungMessage
         ) : (
             tampungMessageReplaceSymbol = this.setMessageString(tampungMessage).removeSimbol().result(),
-            console.log(`test ${tampungMessageReplaceSymbol.message}`),
-            badData.forEach(bad1 => {
-                if (tampungMessageReplaceSymbol.message.includes(bad1.trim())) badMatchSymbol.push(bad1)
+            badData.forEach(bad => {
+                if (tampungMessageReplaceSymbol.message.includes(bad.trim())) badMatchSymbol.push(bad1)
             }),
             this.bad = badMatchSymbol,
             this.message = tampungMessageReplaceSymbol.message
