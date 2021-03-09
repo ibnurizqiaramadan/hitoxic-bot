@@ -2,7 +2,8 @@ const Engine = require("./system/Engine.js")
 const {
     WARN_MESSAGE,
     USER_MESSAGE,
-    PREFIX
+    PREFIX,
+    OWNER_ID
 } = require('./config.json')
 const bot = require("./system/Bot")
 const engine = new Engine()
@@ -85,9 +86,44 @@ function startCommand(message) {
     const command = args.shift().toLowerCase().replace(PREFIX, '')
     if (message.content.startsWith(PREFIX)) {
         message.delete({timeout: USER_MESSAGE})
-        if (!bot.commands.has(command)) return
+        // if (!bot.commands.has(command)) return
         try {
             switch (command) {
+                case "reload" :
+                    console.log(command)
+                    console.log(args)
+                    const memberAccess = message.member.permissions
+                    if (!memberAccess.has("ADMINISTRATOR")) return message.reply("Anda tidak memiliki akses").then(msg => {msg.delete({timeout: WARN_MESSAGE})})
+                    message.channel.send(':arrows_counterclockwise: Memuat ulang ...')
+                    .then(async msg => {
+                        const guilds = await engine.getGuildSettings()
+                        const members = await engine.getMembersStatus()
+                        guilds.status == 'ok' ? (
+                            args[0] == 'all' &&  message.author.id == OWNER_ID ? (
+                                bot.guildsData = guilds.data ?? [], 
+                                bot.membersData = members.data ?? [],
+                                console.log('Reload all guilds'),
+                                console.log(bot.guildsData),
+                                console.log(bot.membersData)
+                            ) : (
+                                bot.guildsData[message.guild.id] = guilds.data[message.guild.id] ?? [], 
+                                bot.membersData[message.guild.id] = members.data[message.guild.id] ?? [],
+                                console.log('Reload current guild'),
+                                console.log(bot.guildsData[message.guild.id]),
+                                console.log(bot.membersData[message.guild.id])
+                            ),
+                            console.log("Reloaded"),
+                            message.channel.send(":ballot_box_with_check: Berhasil memuat ulang").then(msgReload => {
+                                msgReload.delete({timeout: WARN_MESSAGE})
+                            })
+                        ) : (
+                            message.channel.send(":regional_indicator_x: Gagal memuat ulang config").then(msgReload => {
+                                msgReload.delete({timeout: WARN_MESSAGE})
+                            })
+                        )
+                        msg.delete({timeout: WARN_MESSAGE})
+                    })
+                    break;
                 case "uptime":
                     bot.commands.get(command).execute(message, args, bot.uptime)
                     break;
@@ -97,7 +133,11 @@ function startCommand(message) {
             }
         } catch (error) {
             console.error(error)
-            msg.reply('Error saat menjalankan perintah ! :(')
+            message.reply('Error saat menjalankan perintah ! :(').then(msg => {
+                msg.delete({
+                    timeout: WARN_MESSAGE
+                })
+            })
         }
     }
 }
