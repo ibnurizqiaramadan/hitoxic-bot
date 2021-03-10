@@ -79,7 +79,7 @@ function startCommand(message) {
     const args = message.content.split(/ +/)
     const command = args.shift().toLowerCase().replace(PREFIX, '')
     if (message.content.startsWith(PREFIX)) {
-        message.delete({timeout: USER_MESSAGE})
+        // message.delete({timeout: USER_MESSAGE})
         // if (!bot.commands.has(command)) return
         try {
             switch (command) {
