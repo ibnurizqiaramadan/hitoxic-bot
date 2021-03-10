@@ -7,7 +7,6 @@ const engine = new Engine()
 const {
     BOT_TOKEN,
 } = require("../config.json")
-const request = require('request')
 bot.commands = new Discord.Collection()
 
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'))
