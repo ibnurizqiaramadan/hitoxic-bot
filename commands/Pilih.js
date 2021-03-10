@@ -12,7 +12,6 @@ module.exports = {
                 array[currentIndex] = array[randomIndex];
                 array[randomIndex] = temporaryValue;
             }
-
             return array;
         }
         let pilihan = msg.content.substr(command.length, msg.content.length), pesan = ''
@@ -39,7 +38,6 @@ module.exports = {
         if (pilihan.length > 2) {
             pesan = `Dari ke-${pilihan.length} pilihan, `
         } 
-        // msg.reply(`\ncommand : ${command}\nPilihan : ${pilihan}\nJml Pilihan : ${pilihan.length}`)
         msg.reply(`${pesan + katanya[kata].replace("%PILIHAN%", pilihan[chance].trim())}`)
     }
 }

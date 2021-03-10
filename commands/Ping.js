@@ -4,6 +4,6 @@ module.exports = {
     name: 'ping',
     description: 'Ping!',
     execute(message, args) {
-        message.reply(`PONG !\nping ke Server ** ${message.guild} ** ${Date.now() - message.createdTimestamp} ms`).then(msg => msg.delete({timeout: WARN_MESSAGE}))
+        message.reply(`PONG !\nping ke Server ** ${message.guild} ** ${Date.now() - message.createdTimestamp} ms`)
     },
 };
