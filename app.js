@@ -9,7 +9,7 @@ const bot = require("./system/Bot")
 const engine = new Engine()
 
 async function cekKata(message, messageUpdate = false) {
-    return new Promise(async callback => {
+    return new Promise(callback => {
         const words = bot.guildsData[message.guild.id].words
         const hasilPesan = engine.setMessage(message)
             .setLowerCase()
@@ -24,9 +24,8 @@ async function cekKata(message, messageUpdate = false) {
             .result()
         const attachments = messageUpdate == !1 ? hasilPesan.attachments : []
         const type = messageUpdate == !0 ? 3 : 0
-        const simpanPesan = await engine.storeMessages(message, {attachments: attachments, type: type })
-        // console.log(simpanPesan)
         callback(hasilPesan)
+        engine.storeMessages(message, {attachments: attachments, type: type })
     })
 }
 
@@ -38,12 +37,6 @@ async function cekHasil(message, messageUpdate = false) {
                 timeout: 100
             })
             let badwords = hasilCek.bad
-            let postData = await engine.storeMessages(message, {
-                type: 1,
-                attachments: hasilCek.attachments
-            })
-            // console.log('Insert Badword :');
-            // console.log(postData)
             message.reply(`Jangan menggunakan kata ~~**${badwords}**~~ ya !`).then(msg => {
                 msg.delete({
                     timeout: WARN_MESSAGE
@@ -54,6 +47,7 @@ async function cekHasil(message, messageUpdate = false) {
                 badToday: +1,
                 badCount: +1
             }
+            engine.storeMessages(message, {type: 1,attachments: hasilCek.attachments})
             console.log(bot.membersData[message.guild.id].members[message.author.id])
         }
         callback(hasilCek)
@@ -101,16 +95,16 @@ function startCommand(message) {
                         guilds.status == 'ok' && members.status == 'ok' ? (
                             args[0] == 'all' && message.author.id == OWNER_ID ? (
                                 bot.guildsData = guilds.data ?? [], 
-                                bot.membersData = members.data ?? []
-                                // console.log('Reload all guilds'),
-                                // console.log(bot.guildsData),
-                                // console.log(bot.membersData)
+                                bot.membersData = members.data ?? [],
+                                console.log('Reload all guilds'),
+                                console.log(bot.guildsData),
+                                console.log(bot.membersData)
                             ) : (
                                 bot.guildsData[message.guild.id] = guilds.data[message.guild.id] ?? [], 
                                 bot.membersData[message.guild.id] = members.data[message.guild.id] ?? [],
-                                console.log('Reload current guild')
-                                // console.log(bot.guildsData[message.guild.id]),
-                                // console.log(bot.membersData[message.guild.id])
+                                console.log('Reload current guild'),
+                                console.log(bot.guildsData[message.guild.id]),
+                                console.log(bot.membersData[message.guild.id])
                             ),
                             console.log("Reloaded"),
                             message.channel.send(":ballot_box_with_check: Berhasil memuat ulang").then(msgReload => {
@@ -176,8 +170,8 @@ bot.on('message', async message => {
         bot.membersData[message.guild.id] = {
             members: []
         }
-        // console.log(guildAdd)
-        // console.log(bot.guildsData[message.guild.id])
+        console.log(guildAdd)
+        console.log(bot.guildsData[message.guild.id])
     }
     const member = await cekMember(message)
     if (member == false) {
@@ -189,9 +183,9 @@ bot.on('message', async message => {
             badToday: 0,
             badCount: 0
         }
-        // console.log(memberAdd)
-        // console.log(memberGuild)
-        // console.log(bot.membersData[message.guild.id])
+        console.log(memberAdd)
+        console.log(memberGuild)
+        console.log(bot.membersData[message.guild.id])
     }
     const channel = await cekChannel(message)
     if (channel == false) {
@@ -199,35 +193,35 @@ bot.on('message', async message => {
         const channelGuild = await engine.addChannelsGuild(message)
         if (bot.guildsData[message.guild.id].channels.list == null) bot.guildsData[message.guild.id].channels.list = []
         bot.guildsData[message.guild.id].channels.list[message.channel.id] = message.channel.name
-        // console.log(channelAdd)
-        // console.log(channelGuild)
+        console.log(channelAdd)
+        console.log(channelGuild)
     }
     const muted = await cekMemberMuted(message)
     if (muted == !0) return message.delete({timeout:10})
     const hasil = await cekHasil(message)
     if (hasil.bad <= 0) startCommand(message)
-    // console.log('\n\n--- NEW MESSAGE ---');
-    // console.log(`${message.guild.name} => ${message.channel.name}`);
-    // console.log(`User => ${message.author.tag}`);
-    // console.log(hasil);
+    console.log('\n\n--- NEW MESSAGE ---');
+    console.log(`${message.guild.name} => ${message.channel.name}`);
+    console.log(`User => ${message.author.tag}`);
+    console.log(hasil);
 })
 
 bot.on('messageUpdate', async function (oldMessage, newMessage) {
     if (!newMessage.guild) return
     if (newMessage.author.bot) return
     const hasil = await cekHasil(newMessage, true)
-    // console.log('\n\n--- UPDATE MESSAGE ---');
-    // console.log(`${newMessage.guild.name} => ${newMessage.channel.name}`);
-    // console.log(`User => ${newMessage.author.tag}`);
-    // console.log(`Old Message => ${oldMessage}`);
-    // console.log(hasil);
+    console.log('\n\n--- UPDATE MESSAGE ---');
+    console.log(`${newMessage.guild.name} => ${newMessage.channel.name}`);
+    console.log(`User => ${newMessage.author.tag}`);
+    console.log(`Old Message => ${oldMessage}`);
+    console.log(hasil);
 })
 
 bot.on('messageDelete', async message => {
     if (!message.guild) return
     if (message.author.bot) return
-    // console.log('\n\n--- DELETE MESSAGE ---');
-    // console.log(`${message.guild.name} => ${message.channel.name}`);
-    // console.log(`User => ${message.author.tag}`);
-    // console.log(`Deleted Messages => ${message}`);
+    console.log('\n\n--- DELETE MESSAGE ---');
+    console.log(`${message.guild.name} => ${message.channel.name}`);
+    console.log(`User => ${message.author.tag}`);
+    console.log(`Deleted Messages => ${message}`);
 })
