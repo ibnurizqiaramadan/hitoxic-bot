@@ -18,7 +18,7 @@ class Engine {
             }, function (error, response) {
                 if (error) throw error
                 let data = fun.parseJSON(response.body)
-                'ok' == data.status ? callback(data) : callback(response)
+                'ok' == data.status ? callback(data) : callback(error)
             });
         })
     }
@@ -34,7 +34,7 @@ class Engine {
             }, function (error, response) {
                 if (error) throw error
                 let data = fun.parseJSON(response.body)
-                'ok' == data.status ? callback(data) : callback(response)
+                'ok' == data.status ? callback(data) : callback(error)
             });
         })
     }
@@ -52,7 +52,7 @@ class Engine {
             }, function (error, response) {
                 if (error) throw error
                 let data = fun.parseJSON(response.body)
-                'ok' == data.status ? callback(data) : callback(response)
+                'ok' == data.status ? callback(data) : callback(error)
             });
         })
     }
@@ -70,7 +70,7 @@ class Engine {
             }, function (error, response) {
                 if (error) throw error
                 let data = fun.parseJSON(response.body)
-                'ok' == data.status ? callback(data) : callback(response)
+                'ok' == data.status ? callback(data) : callback(error)
             });
         })
     }
@@ -89,7 +89,7 @@ class Engine {
             }, function (error, response) {
                 if (error) throw error
                 let data = fun.parseJSON(response.body)
-                'ok' == data.status ? callback(data) : callback(response)
+                'ok' == data.status ? callback(data) : callback(error)
             });
         })
     }
@@ -107,7 +107,7 @@ class Engine {
             }, function (error, response) {
                 if (error) throw error
                 let data = fun.parseJSON(response.body)
-                'ok' == data.status ? callback(data) : callback(response)
+                'ok' == data.status ? callback(data) : callback(error)
             });
         })
     }
@@ -125,7 +125,7 @@ class Engine {
             }, function (error, response) {
                 if (error) throw error
                 let data = fun.parseJSON(response.body)
-                'ok' == data.status ? callback(data) : callback(response)
+                'ok' == data.status ? callback(data) : callback(error)
             });
         })
     }
@@ -149,7 +149,7 @@ class Engine {
             }, function (error, response) {
                 if (error) throw error
                 let data = fun.parseJSON(response.body)
-                'ok' == data.status ? callback(data) : callback(response)
+                'ok' == data.status ? callback(data) : callback(error)
             });
         })
     }
