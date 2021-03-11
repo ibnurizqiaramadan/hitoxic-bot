@@ -56,14 +56,14 @@ async function cekHasil(message, messageUpdate = false) {
 
 async function cekMember(message) {
     return new Promise(callback => {
-        const members = bot.membersData[message.guild.id].members ?? []
+        const members = bot.membersData[message.guild.id].members.list ?? []
         callback(members[message.author.id] ?? false)
     })
 }
 
 async function cekChannel(message) {
     return new Promise(callback => {
-        const channels = bot.guildsData[message.guild.id].channels ?? []
+        const channels = bot.guildsData[message.guild.id].channels.list ?? []
         callback(channels[message.channel.id] ?? false)
     })
 }
@@ -73,6 +73,37 @@ async function cekGuild(message) {
         const guilds = bot.guildsData ?? []
         callback(guilds[message.guild.id] ?? false)
     })
+}
+
+async function reloadConfig(message, args) {
+    const guilds = await engine.getGuildSettings()
+    const members = await engine.getMembersStatus()
+    guilds.status == 'ok' && members.status == 'ok' ? (
+        args[0] == 'all' && message.author.id == OWNER_ID ? (
+            bot.guildsData = guilds.data ?? [], 
+            bot.membersData = members.data ?? [],
+            console.log('Reload all guilds'),
+            console.log(bot.guildsData),
+            console.log(bot.membersData)
+        ) : (
+            bot.guildsData[message.guild.id] = guilds.data[message.guild.id] ?? [], 
+            bot.membersData[message.guild.id] = members.data[message.guild.id] ?? [],
+            console.log('Reload current guild'),
+            console.log(bot.guildsData[message.guild.id]),
+            console.log(bot.membersData[message.guild.id]),
+            message.channel.send(`- guild : **${bot.guildsData[message.guild.id].name}**\n- bad words : **${bot.guildsData[message.guild.id].words.bad.length}**\n- ignore words : **${bot.guildsData[message.guild.id].words.ignore.length}**\n- channels : **${bot.guildsData[message.guild.id].channels.count}**\n- members : **${bot.membersData[message.guild.id].members.count}**`).then(msg => {
+                msg.delete({timeout: WARN_MESSAGE})
+            })
+        ),
+        console.log("Reloaded"),
+        message.channel.send(":ballot_box_with_check: Berhasil memuat ulang").then(msgReload => {
+            msgReload.delete({timeout: WARN_MESSAGE})
+        })
+    ) : (
+        message.channel.send(":regional_indicator_x: Gagal memuat ulang config").then(msgReload => {
+            msgReload.delete({timeout: WARN_MESSAGE})
+        })
+    )
 }
 
 function startCommand(message) {
@@ -87,31 +118,7 @@ function startCommand(message) {
                     message.delete({timeout:USER_MESSAGE})
                     message.channel.send(':arrows_counterclockwise: Memuat ulang ...')
                     .then(async msg => {
-                        const guilds = await engine.getGuildSettings()
-                        const members = await engine.getMembersStatus()
-                        guilds.status == 'ok' && members.status == 'ok' ? (
-                            args[0] == 'all' && message.author.id == OWNER_ID ? (
-                                bot.guildsData = guilds.data ?? [], 
-                                bot.membersData = members.data ?? [],
-                                console.log('Reload all guilds'),
-                                console.log(bot.guildsData),
-                                console.log(bot.membersData)
-                            ) : (
-                                bot.guildsData[message.guild.id] = guilds.data[message.guild.id] ?? [], 
-                                bot.membersData[message.guild.id] = members.data[message.guild.id] ?? [],
-                                console.log('Reload current guild'),
-                                console.log(bot.guildsData[message.guild.id]),
-                                console.log(bot.membersData[message.guild.id])
-                            ),
-                            console.log("Reloaded"),
-                            message.channel.send(":ballot_box_with_check: Berhasil memuat ulang").then(msgReload => {
-                                msgReload.delete({timeout: WARN_MESSAGE})
-                            })
-                        ) : (
-                            message.channel.send(":regional_indicator_x: Gagal memuat ulang config").then(msgReload => {
-                                msgReload.delete({timeout: WARN_MESSAGE})
-                            })
-                        )
+                        await reloadConfig(message, args)
                         msg.delete({timeout: WARN_MESSAGE})
                     })
                     break;
@@ -138,7 +145,7 @@ function startCommand(message) {
 
 async function cekMemberMuted(message) {
     return new Promise(callback => {
-        const muted = bot.membersData[message.guild.id].members[message.author.id].muted
+        const muted = bot.membersData[message.guild.id].members.list[message.author.id].muted
         callback(muted)
     })
 }
@@ -153,22 +160,19 @@ bot.on('message', async message => {
         bot.guildsData[message.guild.id] = {
             name: message.guild.name,
             words: {
-                bad: null,
-                ignore: null
+                bad: [],
+                ignore: []
             },
             channels: {
-                log: null,
-                ignore: null,
-                lock: null,
-                list: null
-            },
-            members: {
-                muted: null,
-                afk: null
+                list: [],
+                count: 0
             }
         };
         bot.membersData[message.guild.id] = {
-            members: []
+            members: {
+                list: [],
+                count: 0
+            }
         }
         console.log(guildAdd)
         console.log(bot.guildsData[message.guild.id])
@@ -177,8 +181,8 @@ bot.on('message', async message => {
     if (member == false) {
         const memberAdd = await engine.addMembers(message)
         const memberGuild = await engine.addMembersGuild(message)
-        if (bot.membersData[message.guild.id].members == null) bot.membersData[message.guild.id].members = []
-        bot.membersData[message.guild.id].members[message.author.id] = {
+        if (bot.membersData[message.guild.id].members == null) bot.membersData[message.guild.id].members.list = []
+        bot.membersData[message.guild.id].members.list[message.author.id] = {
             username: message.author.tag,
             badToday: 0,
             badCount: 0
@@ -198,7 +202,8 @@ bot.on('message', async message => {
     }
     const muted = await cekMemberMuted(message)
     if (muted == !0) return message.delete({timeout:10})
-    const hasil = await cekHasil(message)
+    let hasil = []
+    !message.content.startsWith(`${PREFIX}word`) ? hasil = await cekHasil(message) : hasil.bad = []
     if (hasil.bad <= 0) startCommand(message)
     console.log('\n\n--- NEW MESSAGE ---');
     console.log(`${message.guild.name} => ${message.channel.name}`);
