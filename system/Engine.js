@@ -249,7 +249,7 @@ class Engine {
         ) : (
             tampungMessageReplaceSymbol = this.setMessageString(tampungMessage).removeSimbol().result(),
             badData.forEach(bad => {
-                if (tampungMessageReplaceSymbol.message.includes(bad.trim())) badMatchSymbol.push(bad1)
+                if (tampungMessageReplaceSymbol.message.includes(bad.trim())) badMatchSymbol.push(bad)
             }),
             this.bad = badMatchSymbol,
             this.message = tampungMessageReplaceSymbol.message
