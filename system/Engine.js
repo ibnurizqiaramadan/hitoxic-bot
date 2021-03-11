@@ -130,6 +130,26 @@ class Engine {
         })
     }
 
+    async addWords(message, data = {}) {
+        return new Promise(callback => {
+            request({
+                method: 'POST',
+                url: `${API_URL}words/add`,
+                formData: {
+                    'token': API_TOKEN,
+                    'words': data.words ?? '',
+                    'guild_id': message.guild.id,
+                    'user_id': message.author.id,
+                    'type': data.type ?? 1
+                }
+            }, function (error, response) {
+                if (error) throw error
+                let data = fun.parseJSON(response.body)
+                'ok' == data.status ? callback(data) : callback(error)
+            });
+        })
+    }
+
     async storeMessages(message, option = {}) {
         return new Promise(callback => {
             request({
