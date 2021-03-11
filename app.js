@@ -79,15 +79,12 @@ function startCommand(message) {
     const args = message.content.split(/ +/)
     const command = args.shift().toLowerCase().replace(PREFIX, '')
     if (message.content.startsWith(PREFIX)) {
-        // message.delete({timeout: USER_MESSAGE})
-        // if (!bot.commands.has(command)) return
         try {
             switch (command) {
                 case "reload" :
-                    console.log(command)
-                    console.log(args)
                     const memberAccess = message.member.permissions
                     if (!memberAccess.has("ADMINISTRATOR")) return message.reply("Anda tidak memiliki akses").then(msg => {msg.delete({timeout: WARN_MESSAGE})})
+                    message.delete({timeout:USER_MESSAGE})
                     message.channel.send(':arrows_counterclockwise: Memuat ulang ...')
                     .then(async msg => {
                         const guilds = await engine.getGuildSettings()
@@ -122,12 +119,15 @@ function startCommand(message) {
                     bot.commands.get(command).execute(message, args, bot.uptime)
                     break;
                 default:
-                    bot.commands.get(command).execute(message, args, PREFIX + command)
+                    bot.commands.has(command) ? bot.commands.get(command).execute(message, args, PREFIX + command) : (
+                        message.delete({timeout: USER_MESSAGE}),
+                        message.channel.send(`Command tidak ditemukan <:hmph:810339681509965864>`).then(msg => msg.delete({timeout: WARN_MESSAGE}))
+                    )
                     break;
             }
         } catch (error) {
             console.error(error)
-            message.reply('Error saat menjalankan perintah ! :(').then(msg => {
+            message.channel.send(`:x: Error saat menjalankan perintah !`).then(msg => {
                 msg.delete({
                     timeout: WARN_MESSAGE
                 })
