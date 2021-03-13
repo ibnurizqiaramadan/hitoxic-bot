@@ -14,6 +14,7 @@ module.exports = {
         switch (action) {
             case 'add':
                 const addWords = await engine.addWords(message, {words: words})
+                console.log(addWords)
                 addWords.status == 'ok' ? (message.channel.send(`:white_check_mark: ${addWords.created.length} kata berhasil dimasukan **${addWords.created.length > 0 ? addWords.created : '-'}**\n:no_entry: ${addWords.failed.length} kata gagal dimasukan **${addWords.failed.length > 0 ? addWords.failed : '-'}**`).then(msg => msg.delete({timeout: BOT_MESSAGE}))) : (message.channel.send(`:x: Kesalahan Server :(\n${addWords}`).then(msg => msg.delete({timeout: BOT_MESSAGE})))
                 break
             case 'addignore':
