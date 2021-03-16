@@ -6,5 +6,5 @@
     "PREFIX": "/",
     "BOT_MESSAGE": "5000",
     "USER_MESSAGE": "3000",
-    "WARN_MESSAGE": "30000"
+    "WARN_MESSAGE": "10000"
 }
