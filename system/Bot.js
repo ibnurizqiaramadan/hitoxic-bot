@@ -4,9 +4,6 @@ const Client = require('./Init')
 const Engine = require('./Engine')
 const bot = new Client()
 const engine = new Engine()
-const {
-    BOT_TOKEN,
-} = require("../config.json")
 bot.commands = new Discord.Collection()
 
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'))
@@ -22,18 +19,18 @@ bot.on('ready', async () => {
     const guilds = await engine.getGuildSettings()
     const members = await engine.getMembersStatus()
     guilds.status == 'ok' && members.status == 'ok' ? (
-        bot.guildsData = guilds.data ?? [], 
-        bot.membersData = members.data ?? [], 
+        bot.guildsData = guilds.data ?? [],
+        bot.membersData = members.data ?? [],
         console.log(bot.guildsData),
         console.log(bot.membersData),
         console.log("Bot Ready !")
     ) : (
-        bot.destroy(), 
-        console.log(guilds), 
+        bot.destroy(),
+        console.log(guilds),
         console.log('bot gagal berjalan :('),
         process.exit(1)
     )
 })
 
-bot.login(BOT_TOKEN)
+bot.login(process.env.BOT_TOKEN)
 module.exports = bot

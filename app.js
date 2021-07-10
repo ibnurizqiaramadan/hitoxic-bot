@@ -1,3 +1,5 @@
+const dotenv = require('dotenv');
+dotenv.config();
 const Engine = require("./system/Engine.js")
 const {
     WARN_MESSAGE,
