@@ -1,7 +1,4 @@
-const {
-    API_TOKEN,
-    API_URL
-} = require("../config.json")
+const API_URL = process.env.API_URL, API_TOKEN = process.env.API_TOKEN
 const request = require('request')
 const Function = require('../helper/Function')
 const fun = new Function()
