@@ -128,7 +128,7 @@ function startCommand(message) {
                     bot.commands.get(command).execute(message, args, bot.uptime)
                     break;
                 default:
-                    bot.commands.has(command) ? bot.commands.get(command).execute(message, args, PREFIX + command) : (
+                    bot.commands.has(command) ? bot.commands.get(command).execute(message, args, command) : (
                         message.delete({timeout: USER_MESSAGE}),
                         message.channel.send(`Command tidak ditemukan <:hmph:810339681509965864>`).then(msg => msg.delete({timeout: WARN_MESSAGE}))
                     )
@@ -153,7 +153,8 @@ async function cekMemberMuted(message) {
 }
 
 bot.on('message', async message => {
-    if (!message.guild) return
+    // console.log(message.guild);
+    if (!message.guild) return console.log(message)
     if (message.author.bot) return
     const guild = await cekGuild(message)
     if (guild == false) {
