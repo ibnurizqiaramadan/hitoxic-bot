@@ -99,8 +99,8 @@ const video_player = async (guild, song) => {
     .on('finish', () => {
         const tempSong = song
         song_queue.songs.shift();
-        song_queue.songs.push(tempSong)
         video_player(guild, song_queue.songs[0]);
+        song_queue.songs.push(tempSong)
     });
     await song_queue.text_channel.send(`🎶 Now playing **${song.title}**`)
 }
@@ -115,7 +115,7 @@ const skip_song = (message, server_queue) => {
 
 const stop_song = (message, server_queue) => {
     if (!message.member.voice.channel) return message.channel.send('You need to be in a channel to execute this command!');
-    server_queue?.songs = [];
+    server_queue.songs = [];
     server_queue.connection.dispatcher.end();
 }
 
