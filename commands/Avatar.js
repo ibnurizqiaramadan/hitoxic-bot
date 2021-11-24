@@ -39,6 +39,7 @@ module.exports = {
                     avatarURL = message.guild.iconURL();
                     kirim(avatarURL, "Icon Server Url");
                 } else {
+                    if (!/[<@!&>]/.test(item)) return
                     userId = item.replace(/[<@!&>]/g, '');
                     message.guild.members.fetch(userId).then(userData => {
                         avatarURL = `https://cdn.discordapp.com/avatars/${userData.user.id}/${userData.user.avatar}.png?size=1024`;

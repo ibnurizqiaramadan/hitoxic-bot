@@ -5,11 +5,12 @@ const ytSearch = require('yt-search');
 const queue = new Map();
 
 module.exports = {
-    name: 'play',
-    aliases: ['skip', 'stop'], //We are using aliases to run the skip and stop command follow this tutorial if lost: https://www.youtube.com/watch?v=QBUJ3cdofqc
+    name: 'music',
+    aliases: ['m', 'music'], //We are using aliases to run the skip and stop command follow this tutorial if lost: https://www.youtube.com/watch?v=QBUJ3cdofqc
     cooldown: 0,
     description: 'Advanced music bot',
     async execute(message,args, cmd, client, Discord){
+        console.log(args);
         //Checking for the voicechannel and permissions (you can add more permissions if you like).
         const voice_channel = message.member.voice.channel;
         if (!voice_channel) return message.channel.send('You need to be in a channel to execute this command!');
@@ -21,14 +22,14 @@ module.exports = {
         const server_queue = queue.get(message.guild.id);
 
         //If the user has used the play command
-        if (cmd === 'play'){
+        if (args[0] == 'play' || args[0] == 'p'){
             console.log("play music");
             if (!args.length) return message.channel.send('You need to send the second argument!');
             let song = {};
 
             //If the first argument is a link. Set the song object to have two keys. Title and URl.
-            if (ytdl.validateURL(args[0])) {
-                const song_info = await ytdl.getInfo(args[0]);
+            if (ytdl.validateURL(args[1])) {
+                const song_info = await ytdl.getInfo(args[1]);
                 song = { title: song_info.videoDetails.title, url: song_info.videoDetails.video_url }
             } else {
                 //If there was no link, we use keywords to search for a video. Set the song object to have two keys. Title and URl.
@@ -36,12 +37,12 @@ module.exports = {
                     const video_result = await ytSearch(query);
                     return (video_result.videos.length > 1) ? video_result.videos[0] : null;
                 }
-
+                args.shift()
                 const video = await video_finder(args.join(' '));
                 if (video){
                     song = { title: video.title, url: video.url }
                 } else {
-                     message.channel.send('Error finding video.');
+                    message.channel.send('Error finding video.');
                 }
             }
 
@@ -75,8 +76,10 @@ module.exports = {
             }
         }
 
-        else if(cmd === 'skip') skip_song(message, server_queue);
-        else if(cmd === 'stop') stop_song(message, server_queue);
+        else if(args[0] === 'skip' || args[0] === 's') skip_song(message, server_queue);
+        else if(args[0] === 'stop' || args[0] === 'st') stop_song(message, server_queue);
+        else if(args[0] === 'pause' || args[0] === 'pa') pause_song(message, server_queue);
+        else if(args[0] === 'resume' || args[0] === 're') resume_song(message, server_queue);
     }
     
 }
@@ -91,10 +94,13 @@ const video_player = async (guild, song) => {
         return;
     }
     const stream = ytdl(song.url, { filter: 'audioonly' });
+    // console.log(stream)
     song_queue.connection.play(stream, { seek: 0, volume: 0.5 })
     .on('finish', () => {
+        const tempSong = song
         song_queue.songs.shift();
-        // video_player(guild, song_queue.songs[0]);
+        video_player(guild, song_queue.songs[0]);
+        song_queue.songs.push(tempSong)
     });
     await song_queue.text_channel.send(`🎶 Now playing **${song.title}**`)
 }
@@ -111,4 +117,14 @@ const stop_song = (message, server_queue) => {
     if (!message.member.voice.channel) return message.channel.send('You need to be in a channel to execute this command!');
     server_queue.songs = [];
     server_queue.connection.dispatcher.end();
+}
+
+const pause_song = (message, server_queue) => {
+    if (!message.member.voice.channel) return message.channel.send('You need to be in a channel to execute this command!');
+    server_queue.connection.dispatcher.pause();
+}
+
+const resume_song = (message, server_queue) => {
+    if (!message.member.voice.channel) return message.channel.send('You need to be in a channel to execute this command!');
+    server_queue.connection.dispatcher.resume();
 }
