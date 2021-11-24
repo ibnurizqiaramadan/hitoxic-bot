@@ -99,8 +99,8 @@ const video_player = async (guild, song) => {
     .on('finish', () => {
         const tempSong = song
         song_queue.songs.shift();
-        song_queue.songs.push(tempSong)
         video_player(guild, song_queue.songs[0]);
+        song_queue.songs.push(tempSong)
     });
     await song_queue.text_channel.send(`🎶 Now playing **${song.title}**`)
 }
