@@ -1,3 +1,7 @@
+const {
+    PREFIX,
+} = require('../config.json')
+
 module.exports = {
     name: "pilih",
     description: "pilih salah satu atau lebih ?",
@@ -14,7 +18,7 @@ module.exports = {
             }
             return array;
         }
-        let pilihan = msg.content.substr(command.length, msg.content.length), pesan = ''
+        let pilihan = msg.content.substr(command.length + PREFIX.length, msg.content.length), pesan = ''
         pilihan = pilihan.replace(/atau/g, "|").split("|")
         pilihan = pilihan.filter(item => item != '')
         let katanya = [
