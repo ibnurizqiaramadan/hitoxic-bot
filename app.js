@@ -127,6 +127,9 @@ function startCommand(message) {
                 case "uptime":
                     bot.commands.get(command).execute(message, args, bot.uptime)
                     break;
+                case "m":
+                    bot.commands.get("music").execute(message, args)
+                    break;
                 default:
                     bot.commands.has(command) ? bot.commands.get(command).execute(message, args, command) : (
                         message.delete({timeout: USER_MESSAGE}),
