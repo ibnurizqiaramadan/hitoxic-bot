@@ -1,5 +1,5 @@
 const fs = require('fs')
-const Discord = require('discord.js');
+const Discord = require('discord.js')
 const Client = require('./Init')
 const Engine = require('./Engine')
 const bot = new Client()
@@ -23,6 +23,7 @@ bot.on('ready', async () => {
         bot.membersData = members.data ?? [],
         console.log(bot.guildsData),
         console.log(bot.membersData),
+        console.log("API url", process.env.API_URL),
         console.log("Bot Ready !")
     ) : (
         bot.destroy(),
