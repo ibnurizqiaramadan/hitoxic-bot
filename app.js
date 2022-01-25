@@ -9,6 +9,18 @@ const {
 } = require('./config.json')
 const bot = require("./system/Bot")
 const engine = new Engine()
+const express = require('express')
+const app = express()
+const server = require('http').Server(app)
+
+app.get('/', (req, res) => {
+    res.json({
+        "status": "200", 
+        "message": "Hitoxic Bot is running :D"
+    })
+})
+
+server.listen(6901)
 
 async function cekKata(message, messageUpdate = false) {
     return new Promise(callback => {
