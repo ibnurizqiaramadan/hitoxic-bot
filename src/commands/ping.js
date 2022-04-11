@@ -1,38 +1,33 @@
-module.exports = {
-    name: "avatar",
-    description: "Get Avatar",
-    execute(message, args) {
-        let colorEmbed, authorUrl;
+const Command = require('../structures/Command')
+const { MessageEmbed } = require("discord.js")
+
+module.exports = new Command({
+	name: "avatar", 
+	description: "get player avatar", 
+	async run(message, args, client) {
+		let colorEmbed, authorUrl;
         if (message.member.displayColor) {
             colorEmbed = message.member.displayColor
         } else {
             colorEmbed = 3447003
         }
-        authorUrl = message.author.avatarURL({
-            format: "png",
-            dynamic: true,
-            size: 1024
-        })
+		// console.log(message.author);
+        authorUrl = `https://cdn.discordapp.com/avatars/${message.author.id}/${message.author.avatar}.png?size=1024`
         function kirim(avatar, title) {
             message.channel.send({
-                embed: {
-                    color: colorEmbed,
-                    footer: {
-                        icon_url: authorUrl,
-                        text: `Requested by ${message.author.tag}`
-                    },
-                    author: {
-                        name: message.author.tag
-                    },
-                    title: title,
-                    url: avatar,
-                    image: {
-                        url: avatar
-                    }
-                }
-            })
+				embeds: [
+					new MessageEmbed()
+						.setTitle(title)
+						.setURL(avatar)
+						.setFooter({
+							iconURL: authorUrl,
+							text: `Requested by ${message.author.tag}`
+						})
+						.setImage(avatar)
+				]
+			})
         }
-        if (args.length > 0) {
+        if (args.length > 1) {
             let userId;
             args.forEach(item => {
                 if (item == "server") {
@@ -48,7 +43,7 @@ module.exports = {
                 }
             });
         } else {
-            kirim(authorUrl, "Avatar Url")
+            kirim(authorUrl, `Avatar Url for ${message.author.tag}`)
         }
-    }
-}
+	}
+})

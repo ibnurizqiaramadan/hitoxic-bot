@@ -1,28 +1,28 @@
 {
-  "name": "hitoxic-v2",
+  "name": "hitoxic-bot",
   "version": "1.0.0",
-  "description": "HiToxic-V2",
-  "main": "index.js",
+  "description": "",
+  "main": "src/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon app.js"
+    "dev": "nodemon ."
   },
   "author": "xyrus10",
   "license": "ISC",
   "dependencies": {
-    "discord.js": "^12.5.1",
-    "dotenv": "^10.0.0",
-    "express": "^4.17.2",
-    "ffmpeg": "0.0.4",
-    "ffmpeg-static": "^4.2.7",
-    "fluent-ffmpeg": "^2.1.2",
+    "@discordjs/builders": "^0.11.0",
+    "@discordjs/opus": "^0.7.0",
+    "@discordjs/rest": "^0.3.0",
+    "@discordjs/voice": "^0.8.0",
+    "discord-api-types": "^0.31.0",
+    "discord-player": "^5.2.2",
+    "discord.js": "^13.5.1",
+    "dotenv": "^11.0.0",
+    "ffmpeg": "^0.0.4",
+    "ffmpeg-static": "^4.4.1",
     "fs": "0.0.1-security",
-    "moment": "^2.27.0",
-    "moment-duration-format": "^2.3.2",
-    "opusscript": "0.0.8",
-    "request": "^2.88.2",
-    "yt-search": "^2.10.1",
-    "ytdl-core": "^4.10.0"
+    "moment": "^2.29.1",
+    "moment-duration-format": "^2.3.2"
   },
   "devDependencies": {
     "nodemon": "^2.0.15"
