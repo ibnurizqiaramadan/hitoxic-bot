@@ -1,12 +1,11 @@
-const {
-    PREFIX,
-} = require('../config.json')
+const Command = require('../structures/Command')
 
-module.exports = {
-    name: "pilih",
-    description: "pilih salah satu atau lebih ?",
-    execute(msg, args, command) {
-        function shuffle(array) {
+module.exports = new Command({
+	name: "pilih", 
+    aliases: "pil",
+	description: "Pilih random", 
+	async run(message, args, client) {
+		function shuffle(array) {
             var currentIndex = array.length,
                 temporaryValue, randomIndex;
             while (0 !== currentIndex) {
@@ -18,7 +17,7 @@ module.exports = {
             }
             return array;
         }
-        let pilihan = msg.content.substr(command.length + PREFIX.length, msg.content.length), pesan = ''
+        let pilihan = message.content.substr(args[0].length + client.prefix.length, message.content.length), pesan = ''
         pilihan = pilihan.replace(/atau/g, "|").split("|")
         pilihan = pilihan.filter(item => item != '')
         let katanya = [
@@ -42,6 +41,6 @@ module.exports = {
         if (pilihan.length > 2) {
             pesan = `Dari ke-${pilihan.length} pilihan, `
         } 
-        msg.reply(`${pesan + katanya[kata].replace("%PILIHAN%", pilihan[chance].trim())}`)
-    }
-}
+        message.reply(`${pesan + katanya[kata].replace("%PILIHAN%", pilihan[chance].trim())}`)
+	}
+})
