@@ -8,7 +8,7 @@ client.start(process.env.BOT_TOKEN2)
 
 client.player.on("trackStart", queue => {
     const track = queue.current
-    client.channels.cache.get(track.channel).send(`Sedang memutar **${ track.title }**`)
+    if (!queue.repeatMode == 3) client.channels.cache.get(track.channel).send(`Sedang memutar **${ track.title }**`)
 })
 
 client.player.on("trackAdd", queue => {
