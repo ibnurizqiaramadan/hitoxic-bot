@@ -16,6 +16,7 @@ module.exports = new Command({
             channel: message.channel
             // searchEngine: QueryType.YOUTUBE_VIDEO
         })
+        if (result.tracks.length === 0) return message.reply(`Tidak ada hasil`)
         let song = result.tracks[0]
         song.channel = message.channelId
         song.guild = message.guildId
