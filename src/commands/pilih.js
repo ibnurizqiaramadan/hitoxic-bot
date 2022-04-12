@@ -3,7 +3,7 @@ const Command = require('../structures/Command')
 module.exports = new Command({
 	name: "pilih", 
     aliases: "pil",
-	description: "Random Chooses", 
+	description: "Random Choice", 
     usage: "pilih choice1 atau choice2 atau choice3",
 	async run(message, args, client) {
 		function shuffle(array) {
