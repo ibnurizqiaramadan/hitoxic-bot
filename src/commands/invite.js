@@ -25,7 +25,7 @@ module.exports = new Command({
                 .setTitle(`Click to Invite`)
                 .setURL(link)
                 .setThumbnail(icon)
-                .setDescription(`Invite the bot to your server !\n${client.guilds.cache.size} server & ${client.users.cache.size} users using the bot`)
+                .setDescription(`Invite the bot to your server !\n**${client.guilds.cache.size}** server & **${client.users.cache.size}** users using the bot`)
                 .setFooter({text: `Requested by ${message.author.tag}`, iconURL: iconUser})
                 .setColor(`#${Math.floor(Math.random()*16777215).toString(16)}`)
             ]
