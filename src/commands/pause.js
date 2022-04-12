@@ -3,7 +3,7 @@ const Command = require('../structures/Command')
 module.exports = new Command({
 	name: "pause", 
     aliases: "pa",
-	description: "Pause musik", 
+	description: "Pause song", 
 	async run(message, args, client) {
 		if (!message.member.voice.channel) return message.reply(`Kamu harus masuk voice channel`)
         const queue = await client.player.getQueue(message.guild)

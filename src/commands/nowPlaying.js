@@ -4,11 +4,11 @@ const { MessageEmbed } = require("discord.js")
 module.exports = new Command({
 	name: "nowplaying", 
 	aliases: "np",
-	description: "Melihat musik yang sedang diputar", 
+	description: "Display current playing song", 
 	async run(message, args, client) {
-		const queue = client.player.getQueue(message.guildId)
-
-		if (!queue) return await message.reply("Tidak ada list musik")
+		if (!message.member.voice.channel) return message.reply(`You must be on the voice channel`)
+        const queue = await client.player.getQueue(message.guild)
+		if (!queue) return await message.reply("Queue is empty")
 
 		let bar = queue.createProgressBar({
 			queue: false,

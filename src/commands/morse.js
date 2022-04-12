@@ -27,6 +27,7 @@ function KeAlfabet_(kata) {
 module.exports = new Command({
     name: "morse",
     aliases: "mor",
+    description: "Morse code",
     async run(message, args, client) {
         let dm = false;
         let pesan = '';

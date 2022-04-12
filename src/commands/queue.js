@@ -4,7 +4,7 @@ const { MessageEmbed } = require("discord.js")
 module.exports = new Command({
 	name: "queue", 
     aliases: "q",
-	description: "Skip musik", 
+	description: "Skip song", 
 	async run(message, args, client) {
 		const queue = client.player.getQueue(message.guildId)
         if (!queue || !queue.playing){
@@ -15,7 +15,7 @@ module.exports = new Command({
         const page = (args[1] || 1) - 1
 
         if (page + 1 > totalPages) 
-            return await message.send(`Invalid Page. There are only a total of ${totalPages} pages of songs`)
+            return await message.channel.send(`Invalid Page. There are only a total of ${totalPages} pages of songs`)
         
         const queueString = queue.tracks.slice(page * 10, page * 10 + 10).map((song, i) => {
             return `**${page * 10 + i + 1}.** \`[${song.duration}]\` ${song.title} -- <@${song.requestedBy?.id}>`
