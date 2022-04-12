@@ -5,6 +5,7 @@ module.exports = new Command({
     name: "invite",
     aliases: "inv",
     description: "Invite the Bot",
+    usage: "invite",
     async run(message, args, client) {
         const icon = `https://cdn.discordapp.com/avatars/${client.user.id}/${client.user.avatar}.png`
         const iconUser = `https://cdn.discordapp.com/avatars/${message.author.id}/${message.author.avatar}.png`

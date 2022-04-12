@@ -4,6 +4,7 @@ module.exports = new Command({
 	name: "pilih", 
     aliases: "pil",
 	description: "Random Chooses", 
+    usage: "pilih choose1 atau choose2 atau choose3",
 	async run(message, args, client) {
 		function shuffle(array) {
             var currentIndex = array.length,

@@ -4,6 +4,7 @@ module.exports = new Command({
 	name: "shuffle", 
     aliases: "sf",
 	description: "Shuffles the queue", 
+	usage: "shuffle",
 	async run(message, args, client) {
 		if (!message.member.voice.channel) return message.reply(`You must be on the voice channel`)
         const queue = await client.player.getQueue(message.guild)

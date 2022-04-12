@@ -4,6 +4,7 @@ module.exports = new Command({
 	name: "repeat", 
     aliases: "re",
 	description: "Repeat queue", 
+	usage: "repeat <off|on|auto>",
 	async run(message, args, client) {
 		if (!message.member.voice.channel) return message.reply(`You must be on the voice channel`)
         const queue = await client.player.getQueue(message.guild)

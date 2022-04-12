@@ -5,6 +5,7 @@ module.exports = new Command({
 	name: "queue", 
     aliases: "q",
 	description: "Show queue", 
+    usage: "queue [page]",
 	async run(message, args, client) {
 		const queue = client.player.getQueue(message.guildId)
         if (!queue || !queue.playing){

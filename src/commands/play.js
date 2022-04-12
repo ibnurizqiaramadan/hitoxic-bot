@@ -3,7 +3,8 @@ const Command = require('../structures/Command')
 module.exports = new Command({
 	name: "play", 
     aliases: "p",
-	description: "PLay music on youtube link", 
+	description: "Play music on youtube link", 
+    usage: "play <youtube video url>",
 	async run(message, args, client) {
 		if (!message.member.voice.channel) return message.reply(`You must be on the voice channel`)
 

@@ -5,6 +5,7 @@ module.exports = new Command({
 	name: "nowplaying", 
 	aliases: "np",
 	description: "Display current playing song", 
+	usage: "nowplaying",
 	async run(message, args, client) {
 		if (!message.member.voice.channel) return message.reply(`You must be on the voice channel`)
         const queue = await client.player.getQueue(message.guild)
@@ -20,7 +21,7 @@ module.exports = new Command({
 		await message.reply({
 			embeds: [new MessageEmbed()
 				.setThumbnail(song.thumbnail)
-				.setDescription(`Sedang memutar [${song.title}](${song.url})\n\n` + bar)
+				.setDescription(`Currently playing [${song.title}](${song.url})\n\n` + bar)
         	],
 		})
 	}

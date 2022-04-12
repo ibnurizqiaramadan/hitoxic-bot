@@ -28,6 +28,7 @@ module.exports = new Command({
     name: "morse",
     aliases: "mor",
     description: "Morse code",
+    usage: "morse [-f (for morse to text)] <text/morse>",
     async run(message, args, client) {
         let dm = false;
         let pesan = '';

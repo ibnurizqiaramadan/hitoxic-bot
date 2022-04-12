@@ -3,7 +3,9 @@ const { MessageEmbed } = require("discord.js")
 
 module.exports = new Command({
 	name: "avatar", 
-	description: "get player avatar", 
+    aliases: "ava",
+	description: "Get player avatar", 
+    usage: "avatar [@username1 @username2] ",
 	async run(message, args, client) {
 		let colorEmbed, authorUrl;
         if (message.member.displayColor) {
