@@ -4,4 +4,4 @@ const Client = require('./structures/Clients')
 const client = new Client()
 console.log("Starting Bot . . .")
 
-client.start(process.env.BOT_TOKEN1)
+client.start(process.env.BOT_TOKEN2)
