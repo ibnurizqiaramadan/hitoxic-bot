@@ -18,6 +18,7 @@ class Command {
         this.name = options.name
         this.aliases = options.aliases
         this.description = options.description
+        this.usage = options.usage
         this.run = options.run
     }
 }
