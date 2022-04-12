@@ -3,7 +3,7 @@ const Command = require('../structures/Command')
 module.exports = new Command({
 	name: "purge", 
     aliases: "pg",
-	description: "Skip song", 
+	description: "Clear queue", 
 	async run(message, args, client) {
 		if (!message.member.voice.channel) return message.reply(`You must be on the voice channel`)
         const queue = await client.player.getQueue(message.guild)

@@ -4,7 +4,7 @@ const { MessageEmbed } = require("discord.js")
 module.exports = new Command({
 	name: "queue", 
     aliases: "q",
-	description: "Skip song", 
+	description: "Show queue", 
 	async run(message, args, client) {
 		const queue = client.player.getQueue(message.guildId)
         if (!queue || !queue.playing){
