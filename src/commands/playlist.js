@@ -11,7 +11,7 @@ module.exports = new Command({
 		if (!queue.connection) await queue.connect(message.member.voice.channel)
         const query = args.join(' ')
         const result = await client.player.search(query, {
-            requestedBy: message.authorauthor,
+            requestedBy: message.author,
             searchEngine: QueryType.YOUTUBE_PLAYLIST
         })
 
