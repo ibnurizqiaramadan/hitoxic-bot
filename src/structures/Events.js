@@ -6,7 +6,7 @@ const Client = require('./Clients')
  * @param {Client} client 
  * @param  {Discord.ClientEvents[K]}} eventArgs 
  */
-function RunFunctioin(client, ...eventArgs) {}
+function RunFunction(client, ...eventArgs) {}
 
 /**
  * @template {keyof Discord.ClientEvents} K 
