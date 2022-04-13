@@ -122,17 +122,5 @@ client.socket.on("serverRepeat", async guildId => {
 })
 
 client.socket.on("getStatus", async guildId => {
-    try {
-        const queue = await client.player.getQueue(guildId)
-        client.socket.emit("serverSendStatus", {
-            guild: guildId,
-            queue: queue.tracks,
-            track: {
-                paused: client.musicPaused,
-                repeat: queue.repeatMode
-            }
-        })
-    } catch (error) {
-        
-    }
+    client.getQueueStatus(guildId)
 })

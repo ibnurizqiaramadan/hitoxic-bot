@@ -33,6 +33,21 @@ class Client extends Discord.Client {
         this.webControl.set('views', path.join(`./src`, 'views'))
         this.webControl.set('view engine', 'pug')
         this.musicPaused = false
+        this.getQueueStatus = async function(guildId) {
+            try {
+                const queue = await this.player.getQueue(guildId)
+                this.socket.emit("serverSendStatus", {
+                    guild: guildId,
+                    queue: queue.tracks,
+                    track: {
+                        paused: this.musicPaused,
+                        repeat: queue.repeatMode
+                    }
+                })
+            } catch (error) {
+                console.log(error)
+            }
+        }
     }
 
     start() {
