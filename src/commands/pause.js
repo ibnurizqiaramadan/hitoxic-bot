@@ -12,5 +12,6 @@ module.exports = new Command({
         queue.setPaused(true)
 		client.musicPaused = true
         message.reply(`Music has been paused! Use **${client.prefix}resume** to resume the music`)
+		client.getQueueStatus(message.guild.id)
 	}
 })
