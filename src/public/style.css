@@ -1,0 +1,168 @@
+body {
+    background-color: #32353B;
+    color: white;
+    /* padding: 20px; */
+    width: 100vw;
+    overflow: hidden;
+}
+
+* {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+img {
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+    -ms-user-drag: none;
+    user-drag: none;
+}
+
+.card {
+    border: 0;
+    height: calc(100vh - 88px);
+}
+
+.card-body {
+    background-color: #202225;
+    color: #fff;
+}
+
+.card-header {
+    /* background-color: #7289da; */
+    background-color: #202225;
+    color: #fff;
+}
+
+.playlist-content {
+    overflow: auto;
+    width: 600px;
+}
+
+.playlist-thumbnail {
+    object-fit: cover;
+}
+
+.card-footer {
+    background-color: #202225;
+    color: #fff;
+}
+
+.current {
+    width: auto;
+}
+
+.tracks {
+    width: 600px;
+}
+
+.tracks_ {
+    width: 600px;
+}
+
+.playlist-thumbnail {
+    height: 50px;
+    width: 50px;
+
+}
+
+.track-info .title {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 440px;
+}
+
+.songs-title {
+    font-size: 45px;
+}
+
+.track-item {
+    cursor: pointer;
+}
+
+tr {
+    border-bottom: 1.5px #32353B solid;
+    width: 500px !important;
+}
+
+tr td p {
+    margin: 0;
+}
+
+.row-tracks {
+    padding-left: 12px;
+    padding-right: 12px;
+}
+
+.tracks-section {
+    width: 100%;
+}
+
+.current-song .track-author {
+    font-size: 50px;
+    text-shadow: 0 0 10px #000;
+    /* color: rgb(219, 216, 216); */
+}
+
+.current-song .track-title {
+    font-size: 40px;
+    text-shadow: 0 0 10px #000;
+    /* color: rgb(219, 216, 216); */
+}
+
+#btn-play-pause {
+    cursor: pointer;
+    border-radius: 100%;
+    padding-top: 11px;
+    padding-left: 14px;
+    padding-right: 10px;
+    padding-bottom: 11px;
+}
+
+.track-paused {
+    border-radius: 100%;
+    padding-top: 11px !important;
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+    padding-bottom: 11px !important;
+}
+
+.bg-active {
+    background-color: #7289da;
+}
+
+.custom-range::-webkit-slider-thumb {
+    background: #7289DA;
+}
+
+.custom-range::-moz-range-thumb {
+    background: #7289DA;
+}
+
+.custom-range::-ms-thumb {
+    background: #7289DA;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #59595a;
+    border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #737374;
+}
