@@ -18,13 +18,20 @@
     "discord-player": "^5.2.2",
     "discord.js": "^13.5.1",
     "dotenv": "^11.0.0",
+    "express": "^4.17.3",
     "ffmpeg": "^0.0.4",
     "ffmpeg-static": "^4.4.1",
     "fs": "0.0.1-security",
     "moment": "^2.29.1",
-    "moment-duration-format": "^2.3.2"
+    "moment-duration-format": "^2.3.2",
+    "pug": "^3.0.2",
+    "socket.io": "^4.4.1",
+    "socket.io-client": "^4.4.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.15"
+  },
+  "nodemonConfig": {
+    "ignore": ["src/public/*.css", "src/public/*.js", "server/*.js"]
   }
 }
