@@ -10,6 +10,7 @@ module.exports = new Command({
         const queue = await client.player.getQueue(message.guild)
 		if (!queue) return await message.reply("Queue is empty")
         queue.setPaused(true)
+		client.musicPaused = true
         message.reply(`Music has been paused! Use **${client.prefix}resume** to resume the music`)
 	}
 })
