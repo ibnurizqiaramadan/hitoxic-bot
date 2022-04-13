@@ -12,6 +12,7 @@ module.exports = new Command({
         if (args[1] == "off") return queue.setRepeatMode(0) && message.reply(`Repeat off`)
         if (args[1] == "on") return queue.setRepeatMode(2) && message.reply(`Repeat on`)
         if (args[1] == "auto") return queue.setRepeatMode(3) && message.reply(`Repeat auto`)
+		client.getQueueStatus(message.guild.id)
 		return message.reply(`Invalid choose!\navailable chooses: **off, on, auto**`)
 	}
 })
