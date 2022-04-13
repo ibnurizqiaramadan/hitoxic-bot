@@ -26,7 +26,7 @@ module.exports = new Command({
                 name:"",
                 value: "asd"
             })
-            helpString += `**${page * 10 + i + 1}.** **${help.name} | ${help.aliases ?? '-'} **\nUsage: \`${client.prefix}${help.usage}\n${help.description}\` \n\n`
+            helpString += `**${page * 10 + i + 1}.** **${help.name} | ${help.aliases ?? '-'} **\nUsage: \`${client.prefix}${help.usage}\`\n${help.description}\n\n`
         })
         // .join("\n\n")
         console.log(helpString);
