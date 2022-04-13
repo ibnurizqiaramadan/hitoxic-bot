@@ -22,7 +22,7 @@ module.exports = new Command({
                 .setTitle(`Click to open Web Control`)
                 .setURL(`${process.env.WEBCONTROL_URL}/${message.guild.id}`)
                 .setThumbnail(icon)
-                .setDescription(`Invite the bot to your server !\n**${client.guilds.cache.size}** server & **${client.users.cache.size}** users using the bot`)
+                .setDescription(`Control the queue on website`)
                 .setFooter({text: `Requested by ${message.author.tag}`, iconURL: iconUser})
                 .setColor(`#${Math.floor(Math.random()*16777215).toString(16)}`)
             ]
