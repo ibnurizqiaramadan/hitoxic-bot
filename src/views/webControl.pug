@@ -1,0 +1,43 @@
+doctype
+html(lang='en')
+    head
+        meta(charset='utf-8')
+        title Web Control #{server.name}
+        meta(name="socket-url" content=socketUrl)
+        meta(name="guild-id" content=server.id)
+        link(rel="stylesheet", href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css")
+        link(rel="stylesheet", href="style.css")
+        link(rel="stylesheet", href="https://use.fontawesome.com/releases/v5.15.4/css/all.css")
+        script(src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js", defer) 
+        script(src=`${socketUrl}/socket.io/socket.io.js`, defer) 
+        script(src=`script.min.js?${time}`, defer) 
+    body.p-0
+        .card.shadow
+            .card-body.p-0
+                .row.row-tracks
+                    .col.p-0
+                        .card
+                            .card-body#current-thumbnail.d-flex.align-items-start.current-song(style=`background-image: url(${currentSong.thumbnail});background-repeat: no-repeat;background-position: left;background-size: cover;`)
+                                .current-song 
+                                    h2.track-title#track-title #{currentSong.title}
+                                    h1.track-author#track-author #{currentSong.author}
+
+                    .tracks.p-0
+                        .card.tracks_
+                            .card-body.playlist-content.p-0
+                                table.tracks-section
+                                    tbody#queue-content
+
+            .card-footer.shadow
+                .music-control.row
+                    .col.d-flex.align-items-center.justify-content-center.my-1
+                        i.fas.fa-random.btn.text-white#btn-shuffle
+                        i.fas.fa-step-backward.btn.text-white#btn-previous
+                        i.fas.fa-play.btn#btn-play-pause.bg-light.text-dark
+                        i.fas.fa-step-forward.btn.text-white#btn-next
+                        i.fas.fa-redo-alt.btn.text-white#btn-repeat.bg-active
+                .music-control.row
+                    .col.d-flex.align-items-center
+                        p#time-current.m-0 00:00
+                        input#track-progress.mx-3(type="range", name="", class="form-range custom-range", value=0)
+                        p#time-end.m-0 00:00
