@@ -4,8 +4,8 @@ const { QueryType } = require("discord-player")
 module.exports = new Command({
 	name: "playlist", 
     aliases: "pl",
-	description: "Play playist on youtube", 
-    usage: "playlist <youtube playlist url>",
+	description: "Play youtube playist or spotify playlist", 
+    usage: "playlist <url>",
 	async run(message, args, client) {
 		if (!message.member.voice.channel) return message.reply(`You must be on the voice channel`)
         const queue = await client.player.createQueue(message.guild)

@@ -4,8 +4,8 @@ const { QueryType } = require("discord-player")
 module.exports = new Command({
 	name: "play", 
     aliases: "p",
-	description: "Play music on youtube link", 
-    usage: "play <youtube video url>",
+	description: "Play music on youtube", 
+    usage: "play <url|title>",
 	async run(message, args, client) {
 		if (!message.member.voice.channel) return message.reply(`You must be on the voice channel`)
 
