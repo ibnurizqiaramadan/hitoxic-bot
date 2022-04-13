@@ -1,4 +1,5 @@
 const Command = require('../structures/Command')
+const { QueryType } = require("discord-player")
 
 module.exports = new Command({
 	name: "play", 
@@ -13,11 +14,13 @@ module.exports = new Command({
         const query = args.join(' ')
         const result = await client.player.search(query, {
             requestedBy: message.author,
+            searchEngine: QueryType.AUTO
         })
         if (result.tracks.length === 0) return message.reply(`No result !`)
         let song = result.tracks[0]
         await queue.addTrack(song)
         message.reply(`**${ song.title }** added !`)
         if (!queue.playing) await queue.play()
+        client.getQueueStatus(message.guild.id)
 	}
 })

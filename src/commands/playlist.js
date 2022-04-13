@@ -13,7 +13,7 @@ module.exports = new Command({
         const query = args.join(' ')
         const result = await client.player.search(query, {
             requestedBy: message.author,
-            searchEngine: QueryType.YOUTUBE_PLAYLIST
+            searchEngine: QueryType.AUTO
         })
 
         if (result.tracks.length === 0) return message.reply("No results")
@@ -21,5 +21,6 @@ module.exports = new Command({
         await queue.addTracks(result.tracks)
         message.reply(`**${ playlist.title }** with **${result.tracks.length}** songs added !`)
         if (!queue.playing) await queue.play()
+        client.getQueueStatus(message.guild.id)
 	}
 })
