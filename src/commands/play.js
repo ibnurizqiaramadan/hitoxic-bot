@@ -11,7 +11,8 @@ module.exports = new Command({
 
         const queue = await client.player.createQueue(message.guild)
 		if (!queue.connection) await queue.connect(message.member.voice.channel)
-        const query = args.join(' ')
+        const query = args.slice(1).join(' ')
+        console.log(query);
         const result = await client.player.search(query, {
             requestedBy: message.author,
             searchEngine: QueryType.AUTO
