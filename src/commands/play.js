@@ -18,7 +18,7 @@ module.exports = new Command({
             requestedBy: message.author,
             searchEngine: queryType
         })
-        console.log(result);
+        // console.log(result);
         if (result.playlist) {
             const playlist = result.playlist
             const tracks = result.tracks.slice(0, 200)
