@@ -19,7 +19,7 @@ module.exports = new Command({
             return await message.channel.send(`Invalid Page. There are only a total of ${totalPages} pages of songs`)
         
         const queueString = queue.tracks.slice(page * 10, page * 10 + 10).map((song, i) => {
-            return `**${page * 10 + i + 1}.** \`[${song.duration}]\` ${song.title} -- <@${song.requestedBy?.id}>`
+            return `**${page * 10 + i + 1}.** \`[${song.duration}]\` ${song.title} -- ${song.requestedBy?.id != undefined ? `<@${song.requestedBy.id}>` : `web control`}`
         }).join("\n")
 
         const currentSong = queue.current
