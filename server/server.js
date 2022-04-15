@@ -42,6 +42,10 @@ io.on('connection', socket => {
         io.to(data.guild).emit("receiveQueue", data.queue)
     })
 
+    socket.on("serverSendQueueMessage", data => {
+        io.to(data.guild).emit("receiveQueueMessage", data.message)
+    })
+
     
     // client to server 
     socket.on('clientGetTime', guildId => {
@@ -66,6 +70,19 @@ io.on('connection', socket => {
 
     socket.on('clientRepeat', guildId => {
         io.emit("serverRepeat", guildId)
+    })
+
+    socket.on("clientSeek", data => {
+        io.emit("serverSeek", data)
+    })
+
+    socket.on("clientTrackSelected", data => {
+        io.emit("serverTrackSelected", data)
+    })
+
+    socket.on("clientInputQuery", data => {
+        // console.log(data);
+        io.emit("serverInputQuery", data)
     })
 })
 
