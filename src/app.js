@@ -1,4 +1,5 @@
 const Client = require('./structures/Clients')
+const { QueryResolver } = require("discord-player")
 const client = new Client()
 console.log("Starting Bot . . .")
 client.start()
@@ -57,7 +58,7 @@ client.socket.on("serverShuffleQueue", async guildId => {
             queue: queue.tracks
         })
     } catch (error) {
-
+        console.log(error)   
     }
 })
 
@@ -66,7 +67,7 @@ client.socket.on("serverNextQueue", async guildId => {
         const queue = await client.player.getQueue(guildId)
         queue.skip()
     } catch (error) {
-        
+        console.log(error)   
     }
 })
 
@@ -76,6 +77,15 @@ client.socket.on("serverPreviousQueue", async guildId => {
         queue.back()
     } catch (error) {
         
+    }
+})
+
+client.socket.on("serverSeek", async data => {
+    try {
+        const queue = await client.player.getQueue(data.guild)
+        queue.seek(data.seek)
+    } catch (error) {
+        console.log(error)
     }
 })
 
@@ -97,7 +107,7 @@ client.socket.on("serverPlayPause", async guildId => {
             }
         })
     } catch (error) {
-        
+        console.log(error) 
     }
 })
 
@@ -117,7 +127,49 @@ client.socket.on("serverRepeat", async guildId => {
             }
         })
     } catch (error) {
-        
+        console.log(error)
+    }
+})
+
+client.socket.on("serverTrackSelected", async data => {
+    try {
+        const queue = await client.player.getQueue(data.guild)
+        await queue.skipTo(data.position - 1)
+    } catch (error) {
+        console.log(error)
+    }
+})
+
+client.socket.on("serverInputQuery", async data => {
+    try {
+        const queue = await client.player.createQueue(data.guild)
+        const queryType = QueryResolver.resolve(data.query)
+        let message = ''
+        const result = await client.player.search(data.query, {
+            requestedBy: message.author,
+            searchEngine: queryType
+        })
+        if (result.playlist) {
+            const playlist = result.playlist
+            const tracks = result.tracks.slice(0, 200)
+            await queue.addTracks(tracks)
+            message = `${ playlist.title } with ${tracks.length} songs added !`
+            console.log('playlist loaded', data.guild);
+        }
+        else {
+            const track = result.tracks[0]
+            await queue.addTrack(track)
+            message = `${ track.title } added !`
+            console.log('track loaded', data.guild);
+        } 
+        if (!queue.playing) await queue.play()
+        client.socket.emit("serverSendQueueMessage", {
+            guild: data.guild,
+            message: message
+        })
+        client.getQueueStatus(data.guild)
+    } catch (error) {
+        console.log(error)
     }
 })
 
