@@ -62,14 +62,16 @@ const updateQueue = function(queue) {
 }
 const filterQueue = function(text) {
     const queue = document.querySelectorAll(`tr[data-title]`)
-    if (text.trim() == '') {
+    const search = text.trim().toLowerCase()
+    console.log(search);
+    if (search == '') {
         queue.forEach((track, i) => {
             track.classList.remove('d-none')
         })
         totalQueue.innerText = `Queue - ${queue.length} tracks`
         return
     }
-    const queueSelected = document.querySelectorAll(`tr[data-title]:not(tr[data-title*="${text.trim()}"])`)
+    const queueSelected = document.querySelectorAll(`tr[data-title]:not(tr[data-title*="${search}"])`)
     queue.forEach((track, i) => {
         track.classList.remove('d-none')
     })
