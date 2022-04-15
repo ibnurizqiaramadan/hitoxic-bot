@@ -63,7 +63,7 @@ const updateQueue = function(queue) {
 const filterQueue = function(text) {
     const queue = document.querySelectorAll(`tr[data-title]`)
     const search = text.trim().toLowerCase()
-    console.log(search);
+    // console.log(search);
     if (search == '') {
         queue.forEach((track, i) => {
             track.classList.remove('d-none')
