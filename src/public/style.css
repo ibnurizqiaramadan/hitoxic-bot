@@ -6,6 +6,14 @@ body {
     overflow: hidden;
 }
 
+.bungkus {
+    height: calc(100vh);
+}
+
+.thumbnail {
+    height: calc(100vh - 85px);
+}
+
 * {
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -26,11 +34,10 @@ img {
 
 .card {
     border: 0;
-    height: calc(100vh - 88px);
 }
 
 .card-body {
-    background-color: #202225;
+    background-color: #32353B;
     color: #fff;
 }
 
@@ -43,6 +50,7 @@ img {
 .playlist-content {
     overflow: auto;
     width: 600px;
+    height: calc(100vh - (156px + 98px))
 }
 
 .playlist-thumbnail {
@@ -51,7 +59,9 @@ img {
 
 .card-footer {
     background-color: #202225;
+    /* background-color: #7289da; */
     color: #fff;
+    z-index: 9999;
 }
 
 .current {
@@ -79,16 +89,30 @@ img {
     width: 440px;
 }
 
+#nowplaying-title {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    /* width: 440px; */
+}
+
 .songs-title {
     font-size: 45px;
 }
 
 .track-item {
     cursor: pointer;
+    height: 68px;
+}
+
+.track-item:hover {
+    cursor: pointer;
+    height: 68px;
+    background-color: #202225;
 }
 
 tr {
-    border-bottom: 1.5px #32353B solid;
+    /* border-bottom: 1px #202225 solid; */
     width: 500px !important;
 }
 
@@ -150,6 +174,17 @@ tr td p {
     background: #7289DA;
 }
 
+.playlist-header {
+    width: 100%;
+    /* padding: 12px; */
+    background-color: #202225;
+    z-index: 9999;
+}
+
+.playlist-nowplaying {
+    background-color: #202225;
+    /* height: 68px; */
+}
 
 .current-track {
     width: calc(100vw - 600px);
@@ -177,6 +212,10 @@ tr td p {
         width: 100vw;
     }
 
+    .thumbnail {
+        display: none;
+    }
+
     .track-info .title {
         text-overflow: ellipsis;
         white-space: nowrap;
@@ -188,7 +227,7 @@ tr td p {
         width: 100vw;
     }
 
-    body {
+    .bungkus {
         width: 100vw;
     }
 }
@@ -209,7 +248,7 @@ tr td p {
         width: 100vw;
     }
 
-    body {
+    .bungkus {
         width: 100vw;
     }
 }
@@ -217,6 +256,10 @@ tr td p {
 @media only screen and (max-width: 320px) {
     .playlist-content {
         width: 100vw;
+    }
+    
+    .current-track {
+        display: none;
     }
 
     .track-info .title {
@@ -238,7 +281,7 @@ tr td p {
         width: 100vw;
     }
 
-    body {
+    .bungkus {
         width: 100vw;
     }
 }
