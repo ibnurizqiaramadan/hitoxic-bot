@@ -19,12 +19,7 @@ class Client extends Discord.Client {
          */
         this.commands = new Discord.Collection()
         this.prefix  = process.env.PREFIX
-        this.player = new Player(this, {
-            ytdlOptions: {
-                quality: "highestaudio",
-                highWaterMark: 1 << 25
-            },
-        })
+        this.player = new Player(this)
         this.webControl = express()
         this.webControlPort = process.env.WEBCONTROL_PORT
         this.webControlUrl = process.env.WEBCONTROL_URL
@@ -48,6 +43,8 @@ class Client extends Discord.Client {
                 console.log(error)
             }
         }
+        this.serverQueueSettings = []
+        this.MessageEmbed = new Discord.MessageEmbed()
     }
 
     start() {
