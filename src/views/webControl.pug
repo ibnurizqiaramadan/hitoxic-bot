@@ -13,6 +13,7 @@ html(lang='en')
         script(src=`${socketUrl}/socket.io/socket.io.js`, defer) 
         script(src=`script.min.js?${time}`, defer) 
     body.p-0
+    if (currentSong)
         .card.shadow.m-0.p-0.bungkus
             .card-body.p-0
                 .music-screen.d-flex.row-tracks.p-0
@@ -69,3 +70,6 @@ html(lang='en')
                         button#btn-add.btn.bg-active.text-white 
                             i.fas.fa-search 
                             span.ms-2 Search
+    else 
+        h2.m-2 Music has stopped
+        h5.ms-2 Refresh the page when the bot playing music
