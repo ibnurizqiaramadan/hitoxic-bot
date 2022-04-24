@@ -35,6 +35,14 @@ client.player.on("trackStart", queue => {
         track: track,
         queue: queue.tracks
     })
+    // `Playing **[${track.duration}]** **${track.author} - ${track.title}**`
+    client.channels.cache.get(client.serverQueueSettings[queue.guild.id].channel).send(
+        {
+            embeds: [client.MessageEmbed
+                .setThumbnail(track.thumbnail)
+                .setDescription(`Playing [${track.title}](${track.url})\n\nRequested by ${track.requestedBy?.id != undefined ? `<@${track.requestedBy.id}>` : `web control`}`)]
+        }
+    )
 })
 
 client.socket.on("serverGetTime", async guildId => {
