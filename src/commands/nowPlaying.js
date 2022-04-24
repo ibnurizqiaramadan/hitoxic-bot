@@ -1,5 +1,4 @@
 const Command = require('../structures/Command')
-const { MessageEmbed } = require("discord.js")
 
 module.exports = new Command({
 	name: "nowplaying", 
@@ -11,17 +10,19 @@ module.exports = new Command({
         const queue = await client.player.getQueue(message.guild)
 		if (!queue) return await message.reply("Queue is empty")
 
-		let bar = queue.createProgressBar({
+		const bar = queue.createProgressBar({
 			queue: false,
 			length: 19,
 		})
 
+		const time = queue.getPlayerTimestamp()
+
         const song = queue.current
 
 		await message.reply({
-			embeds: [new MessageEmbed()
+			embeds: [client.MessageEmbed
 				.setThumbnail(song.thumbnail)
-				.setDescription(`Currently playing [${song.title}](${song.url})\n\n` + bar)
+				.setDescription(`Currently playing [${song.title}](${song.url})\n\n${time.current} ${bar} ${time.end}`)
         	],
 		})
 	}
