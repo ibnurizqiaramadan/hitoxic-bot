@@ -10,8 +10,8 @@ module.exports = new Command({
 			if (!message.member.voice.channel) return message.reply(`You must be on the voice channel`)
 			const queue = await client.player.getQueue(message.guild)
 			if (!queue) return await message.reply("Queue is empty")
-			await queue.destroy()
 			client.player.voiceUtils.disconnect(queue.connection)
+			await queue.destroy()
 			message.reply(`Bye o(*^▽^*)┛`)
 		} catch (error) {
 			console.log(error)
