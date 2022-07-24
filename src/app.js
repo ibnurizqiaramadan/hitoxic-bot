@@ -80,6 +80,18 @@ client.player.on("botDisconnect", (queue) => {
     console.log("dc", queue);
 });
 
+client.on("voiceStateUpdate", async (oldState, newState) => {
+    try {
+        if (newState.id == client.user.id && newState.channelId === null) {
+            console.log(`bot disconnected`);
+            const queue = await client.player.getQueue(oldState.guild.id);
+            await queue.destroy();
+        }
+    } catch (error) {
+        console.log(error);
+    }
+});
+
 client.socket.on("serverGetTime", async (guildId) => {
     try {
         const queue = await client.player.getQueue(guildId);
