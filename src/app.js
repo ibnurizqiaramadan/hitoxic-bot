@@ -65,7 +65,12 @@ client.player.on("channelEmpty", (queue) => {
 });
 
 client.player.on("connectionError", (queue) => {
-    queue.destroy();
+    try {
+        client.player.voiceUtils.disconnect(queue.connection);
+        queue.destroy();
+    } catch (error) {
+        console.log(error);
+    }
 });
 
 client.socket.on("serverGetTime", async (guildId) => {
