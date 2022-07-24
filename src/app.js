@@ -58,9 +58,12 @@ client.player.on("trackStart", (queue) => {
 });
 
 client.player.on("channelEmpty", (queue) => {
-    console.log("leave ?");
-    if (queue.connection) {
-        queue.connection.disconnect();
+    try {
+        console.log("leave ?");
+        client.player.voiceUtils.disconnect(queue.connection);
+        queue.destroy();
+    } catch (error) {
+        console.log(error);
     }
 });
 
@@ -71,6 +74,10 @@ client.player.on("connectionError", (queue) => {
     } catch (error) {
         console.log(error);
     }
+});
+
+client.player.on("botDisconnect", (queue) => {
+    console.log("dc", queue);
 });
 
 client.socket.on("serverGetTime", async (guildId) => {
