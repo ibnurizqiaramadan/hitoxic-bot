@@ -57,16 +57,6 @@ client.player.on("trackStart", (queue) => {
         });
 });
 
-client.player.on("channelEmpty", (queue) => {
-    try {
-        console.log("leave ?");
-        client.player.voiceUtils.disconnect(queue.connection);
-        queue.destroy();
-    } catch (error) {
-        console.log(error);
-    }
-});
-
 client.player.on("connectionError", (queue) => {
     try {
         client.player.voiceUtils.disconnect(queue.connection);
@@ -76,15 +66,24 @@ client.player.on("connectionError", (queue) => {
     }
 });
 
-client.player.on("botDisconnect", (queue) => {
-    console.log("dc", queue);
-});
-
 client.on("voiceStateUpdate", async (oldState, newState) => {
     try {
+        const queue = await client.player.getQueue(oldState.guild.id);
+        if (!queue) return;
         if (newState.id == client.user.id && newState.channelId === null) {
             console.log(`bot disconnected`);
-            const queue = await client.player.getQueue(oldState.guild.id);
+            await queue.destroy();
+        }
+        const currentGuild = await client.guilds.cache.find(
+            (guild) => guild.id == queue.guild.id
+        );
+        const voiceChannel = await currentGuild.channels.cache.find(
+            (chan) => chan.id == queue.connection.channel.id
+        );
+        const memberCount = voiceChannel.members.size;
+        const lastMember = voiceChannel.members.first();
+        if (memberCount == 1 && lastMember.id == client.user.id) {
+            client.player.voiceUtils?.disconnect(queue.connection);
             await queue.destroy();
         }
     } catch (error) {
