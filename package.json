@@ -11,7 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "@discordjs/builders": "^0.11.0",
-    "@discordjs/opus": "^0.7.0",
+    "@discordjs/opus": "^0.8.0",
     "@discordjs/rest": "^0.3.0",
     "@discordjs/voice": "^0.8.0",
     "discord-api-types": "^0.31.0",
@@ -26,12 +26,17 @@
     "moment-duration-format": "^2.3.2",
     "pug": "^3.0.2",
     "socket.io": "^4.4.1",
-    "socket.io-client": "^4.4.1"
+    "socket.io-client": "^4.4.1",
+    "ytdl-core": "^4.9.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.15"
   },
   "nodemonConfig": {
-    "ignore": ["src/public/*.css", "src/public/*.js", "server/*.js"]
+    "ignore": [
+      "src/public/*.css",
+      "src/public/*.js",
+      "server/*.js"
+    ]
   }
 }
