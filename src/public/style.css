@@ -3,15 +3,16 @@ body {
     color: white;
     /* padding: 20px; */
     /* width: 100vw; */
-    overflow: hidden;
+    overflow-y: auto;
+    min-height: calc(100vh);
 }
 
 .bungkus {
-    height: calc(100vh);
+    min-height: calc(100vh);
 }
 
 .thumbnail {
-    height: calc(100vh - 85px);
+    min-height: calc(100vh - 85px);
 }
 
 * {
