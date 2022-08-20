@@ -184,7 +184,21 @@ client.socket.on("serverRepeat", async (guildId) => {
 client.socket.on("serverTrackSelected", async (data) => {
     try {
         const queue = await client.player.getQueue(data.guild);
-        await queue.skipTo(data.position - 1);
+        await queue.jump(data.position - 1);
+    } catch (error) {
+        console.log(error);
+    }
+});
+
+client.socket.on("serverTrackDelete", async (data) => {
+    try {
+        const queue = await client.player.getQueue(data.guild);
+        queue.tracks.splice(data.position - 1, 1);
+        const newQueue = await client.player.getQueue(data.guild);
+        client.socket.emit("serverSendQueue", {
+            guild: data.guild,
+            queue: newQueue.tracks,
+        });
     } catch (error) {
         console.log(error);
     }
