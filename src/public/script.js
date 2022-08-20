@@ -42,6 +42,7 @@ const setStatus = function (status) {
         btnRepeat.setAttribute("class", "fas fa-redo-alt btn text-white");
 };
 const trackItemSelected = function (position) {
+    return;
     console.log(`position`, position);
     socket.emit("clientTrackSelected", {
         guild: guildId,
@@ -61,16 +62,31 @@ const updateQueue = function (queue) {
             }" onclick="trackItemSelected(${
             i + 1
         })" data-title="${track.title.toLowerCase()} ${track.author.toLowerCase()}">
-                <td class="px-2 text-end">${i + 1}</td>
-                <td class="d-flex align-items-center"><img class="img img-fluid playlist-thumbnail my-2 rounded"
+                <td class="px-1 text-center">${i + 1}</td>
+                <td class="d-flex align-items-center justify-content-between music-item">
+                    <img class="img img-fluid playlist-thumbnail my-2 rounded"
                         src="${track.thumbnail}"
                         alt="thumbnail">
-                    <div class="track-info mx-2">
+                    <div class="mx-3">
                         <p class="author">${track.author}</p>
                         <p class="title">${track.title}</p>
                     </div>
+                    <div class="p-2 ms-auto text-center music-duration">${
+                        track.duration
+                    }</div>
+                    <div class="p-2 text-center d-flex d-none action-button">
+                        <button class="btn btn-sm btn-info me-2 btn-skip-to" title="Skip To" data-id="${
+                            i + 1
+                        }">
+                            <i class="fas fa-play"></i>
+                        </button>
+                        <button class="btn btn-sm btn-danger btn-delete-queue" title="Delete" data-id="${
+                            i + 1
+                        }">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </div>
                 </td>
-                <td class="p-2 text-center">${track.duration}</td>
             </tr>
         `;
     });
@@ -78,6 +94,20 @@ const updateQueue = function (queue) {
     totalQueue.innerText = `Queue - ${queue.length} tracks`;
     totalDuration.innerText = getSecondToTime(totalSeconds);
     queueContent.innerHTML = html;
+    $(".btn-skip-to").click(function () {
+        const data = $(this).data("id");
+        socket.emit("clientTrackSelected", {
+            guild: guildId,
+            position: data,
+        });
+    });
+    $(".btn-delete-queue").click(function () {
+        const data = $(this).data("id");
+        socket.emit("clientTrackDelete", {
+            guild: guildId,
+            position: data,
+        });
+    });
 };
 const filterQueue = function (text) {
     const queue = document.querySelectorAll(`tr[data-title]`);
