@@ -20,7 +20,7 @@ client.webControl.get("/:serverId", async (req, res) => {
                 message: "Queue empty",
             });
         return res.render("webControl", {
-            socketUrl: process.env.WEBCONTROL_SOCKET,
+            socketUrl: process.env.WEBCONTROL_SOCKET_WEB,
             time: Date.now(),
             server: queue.guild,
             tracks: tracks,
@@ -47,10 +47,9 @@ client.player.on("trackStart", (queue) => {
                 client.MessageEmbed.setThumbnail(
                     track.thumbnail
                 ).setDescription(
-                    `Playing [${track.title}](${track.url})\n\nRequested by ${
-                        track.requestedBy?.id != undefined
-                            ? `<@${track.requestedBy.id}>`
-                            : `web control`
+                    `Playing [${track.title}](${track.url})\n\nRequested by ${track.requestedBy?.id != undefined
+                        ? `<@${track.requestedBy.id}>`
+                        : `web control`
                     }`
                 ),
             ],
@@ -98,7 +97,7 @@ client.socket.on("serverGetTime", async (guildId) => {
             guild: guildId,
             time: queue.getPlayerTimestamp(),
         });
-    } catch (error) {}
+    } catch (error) { }
 });
 
 client.socket.on("serverShuffleQueue", async (guildId) => {
@@ -127,7 +126,7 @@ client.socket.on("serverPreviousQueue", async (guildId) => {
     try {
         const queue = await client.player.getQueue(guildId);
         queue.back();
-    } catch (error) {}
+    } catch (error) { }
 });
 
 client.socket.on("serverSeek", async (data) => {
