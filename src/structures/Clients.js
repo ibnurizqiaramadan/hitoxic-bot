@@ -1,6 +1,6 @@
 const Discord = require("discord.js");
 const dotenv = require("dotenv");
-const intents = new Discord.Intents(32767);
+const intents = Discord.GatewayIntentBits;
 const Command = require("./Command");
 const Event = require("./Events");
 const fs = require("fs");
@@ -12,7 +12,16 @@ dotenv.config();
 
 class Client extends Discord.Client {
     constructor() {
-        super({ intents });
+        super({
+            intents: [
+                intents.Guilds,
+                intents.GuildMessages,
+                intents.MessageContent,
+                intents.GuildMembers,
+                intents.GuildVoiceStates,
+                intents.GuildMessageReactions,
+            ],
+        });
 
         /**
          * @type {Discord.Collection<string, Command>}
@@ -44,7 +53,7 @@ class Client extends Discord.Client {
             }
         };
         this.serverQueueSettings = [];
-        this.MessageEmbed = new Discord.MessageEmbed();
+        this.MessageEmbed = Discord.EmbedBuilder;
     }
 
     start() {
