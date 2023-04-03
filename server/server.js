@@ -85,7 +85,6 @@ io.on("connection", (socket) => {
     });
 
     socket.on("clientInputQuery", (data) => {
-        // console.log(data);
         io.emit("serverInputQuery", data);
     });
 });
