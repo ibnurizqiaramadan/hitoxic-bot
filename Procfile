@@ -1,1 +1,0 @@
-worker: node scr/app.js
